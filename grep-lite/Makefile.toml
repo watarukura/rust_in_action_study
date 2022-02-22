@@ -1,0 +1,2 @@
+[tasks.lint]
+dependencies = ["format", "clippy"]
