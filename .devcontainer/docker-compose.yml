@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  development:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/vscode:delegated
+      # For building dependencies always use a volume, you get waaaay better performance.
+      - target:/vscode/target
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+    working_dir: /vscode
+volumes:
+  # The volume for cargo build
+  target:
