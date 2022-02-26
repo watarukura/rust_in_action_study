@@ -4,7 +4,7 @@ use std::fmt;
 use std::fmt::{Display};
 
 #[derive(Debug, PartialEq)]
-enum FileState {
+pub enum FileState {
     Open,
     Closed,
 }
@@ -19,7 +19,7 @@ impl Display for FileState {
 }
 
 #[derive(Debug)]
-struct File {
+pub struct File {
     name: String,
     data: Vec<u8>,
     state: FileState,
