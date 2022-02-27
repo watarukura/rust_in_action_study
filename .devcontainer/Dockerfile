@@ -29,6 +29,9 @@ RUN git clone --branch "$mold_version" --depth 1 https://github.com/rui314/mold.
 
 # use from rust-analyzer
 RUN rustup component add rust-src
+RUN rustup component add rust-analysis
+RUN rustup component add rls
+RUN rustup component add rustfmt
 
 # vscode
 RUN groupadd -g 1000 vscode && \

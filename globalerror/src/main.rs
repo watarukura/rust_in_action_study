@@ -18,6 +18,7 @@ impl Display for FileState {
     }
 }
 
+/// fileは、アクセス可能なファイルを意味する
 #[derive(Debug)]
 pub struct File {
     name: String,
@@ -26,6 +27,7 @@ pub struct File {
 }
 
 impl File {
+    /// 新規ファイルは空とみなすが、ファイル名は必須
     fn new(name: &str) -> File {
         File {
             name: String::from(name),
