@@ -15,7 +15,9 @@ RUN apt-get update && \
     zlib1g-dev \
     pkg-config \
     vim \
-    curl
+    curl \
+    libzmq3-dev \
+    jupyter-notebook
 
 # install mold
 ENV mold_version=v1.1
@@ -57,4 +59,6 @@ WORKDIR /vscode
 RUN mkdir -p /vscode/target && chown vscode:vscode /vscode/target
 
 # development utilities
-RUN mold -run cargo install cargo-edit
+RUN mold -run cargo install cargo-edit && \
+    mold -run cargo install evcxr_jupyter --no-default-features && \
+    evcxr_jupyter --install
