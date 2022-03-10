@@ -152,7 +152,7 @@ fn generate_svg(path_data: Vec<Command>) -> Document {
         .set("fill", "#ffffff");
 
     let border = background
-        .close()
+        .clone()
         .set("fill-opacity", "0.0")
         .set("stroke", "#cccccc")
         .set("stroke-width", 3 * STROKE_WIDTH);
@@ -160,7 +160,7 @@ fn generate_svg(path_data: Vec<Command>) -> Document {
     let sketch = Path::new()
         .set("fill", "none")
         .set("stroke", "#2f2f2f")
-        .set("stroke-width", 3 * STROKE_WIDTH)
+        .set("stroke-width", STROKE_WIDTH)
         .set("fill-opacity", "0.9")
         .set("d", Data::from(path_data));
 
