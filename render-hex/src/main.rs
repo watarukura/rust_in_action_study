@@ -1,5 +1,7 @@
 use std::env;
 
+use rayon::prelude::*;
+
 use svg::node::element::path::{Command, Data, Position};
 use svg::node::element::{Path, Rectangle};
 use svg::Document;
@@ -100,9 +102,10 @@ impl Artist {
 }
 
 fn parse(input: &str) -> Vec<Operation> {
-    let mut steps = Vec::<Operation>::new();
-    for byte in input.bytes() {
-        let step = match byte {
+    input
+        .as_bytes() // 文字列スライスをバイトスライスに変換
+        .par_iter() // バイトスライスを並列イテレータに変換
+        .map(|byte| match byte {
             b'0' => Home,
             b'1'..=b'9' => {
                 let distance = (byte - 0x30) as isize;
@@ -110,11 +113,9 @@ fn parse(input: &str) -> Vec<Operation> {
             }
             b'a' | b'b' | b'c' => TurnLeft,
             b'd' | b'e' | b'f' => TurnRight,
-            _ => Noop(byte),
-        };
-        steps.push(step);
-    }
-    steps
+            _ => Noop(*byte), // byteの方は&u8だがバリアント Operation::Noop(u8)はデリファレンスした値(*byte)を要求する
+        })
+        .collect()
 }
 
 fn convert(operations: &Vec<Operation>) -> Vec<Command> {
